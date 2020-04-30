@@ -8,8 +8,7 @@ Created on Tue Apr 28 10:03:34 2020
 import numpy as np
 import sympy as sp
 from decimal import getcontext
-from decimal import Decimal
-from numpy import sign
+
 
 def mychop(expr, *, max=10**(-10)):
     ''' Esta función redondea por cero cualquier número más
@@ -48,10 +47,15 @@ def factorial (n):
 def taylor(f,a,n): #Derrollo de taylor de f centrado en a hasta el término n
    for i in range (n):
        taylor=1/factorial(i)*derivada_iesima(f,i,a)*(x-a)**i
-       if(i != n-1):
-           print (taylor,"+",end="")
+       if(i!=0):
+           if (derivada_iesima(f,i,a)>0):
+               print ("+",taylor,end="")
+           else: 
+               print (taylor,end="")
        else:
-           print(taylor)
+           print(taylor,end="")
+print()
+       
         
 print("Desarrollo de taylor=" )
 a= int(input ("\n Ingrese en que punto quiere centrado el polinomio >>"))
