@@ -36,6 +36,7 @@ def gNR(x):
     return x - f(x)/df(x)
 
 a = 1.; b = 2.;
+sol_exact = sp.solve(f(x),x)[2] # Solucion exacta
 
 # x0 = 2 -> f(x0)f''(x0)>0 
 
@@ -50,11 +51,12 @@ nmax = 100
 
 
 a0 = a; b0 = b;
-
+biseccion=[];
 niter = 0; getcontext().prec = cifras
 for k in range(nmax):
     niter = niter + 1;
     c = (a+b)/2
+    biseccion.append(c)
     if abs(f(c)) < prec:
         sale = 'precision'
         break
@@ -67,6 +69,7 @@ for k in range(nmax):
         break
 
 print('Metodo biseccion:')
+print (biseccion)
 if sale == 'precision':
     print('Posiblemente solución exacta: ',c)
 elif k <= nmax:
@@ -74,12 +77,56 @@ elif k <= nmax:
 else:
     print('Se llegó al número máximo de iteraciones')
 print('Número total de iteraciones ', niter)
-
+print()
 a = a0; b = b0 # Restauramos los valores originales de a y b
 getcontext().prec = mporig # así como la precisión por defecto
 
+# Aitken
+aprox=biseccion          # Vector con los elementos iterados que queremos acelerar
+n = len(aprox)           # Número de elementos de aprox
+aitken = []              # Definición del vector de soluciones
 
-print('\nSolucion por N-R:')
+def Aitken():
+    k = 0;
+    for k in range(n-2):
+        aproxacel = aprox[k]-(aprox[k+1]-aprox[k])**2/(aprox[k+2]-2*aprox[k+1]+aprox[k]);
+        aitken.append(aproxacel);
+    print('Aceleración de Aitken:\n',aitken)
+    
+Aitken()
+
+#Steffensen
+aprox= biseccion       # Vector con los elementos iterados que queremos acelerar
+n= len(aprox)          # Numero de iteraciones del metodo que queramos acelerar
+tol= 10**(-5)          # Diferencia en valor absoluto entre una aproximación y la solución
+steff= [1];            # Definición del vector de soluciones. Debe estar inicializado a algún valor para que no de errores
+
+def g(x):              # Funcion que queremos que aplique
+    return x - f(x)
+
+def Steffensen():
+    k = 0;
+    while np.abs(sol_exact - steff[len(steff)-1]) > tol:
+        s0 = aprox[k]-(aprox[k+1]-aprox[k])**2/(aprox[k+2]-2*aprox[k+1]+aprox[k])
+        s1 = g(s0)
+        s2 = g(s1)
+        steff.append(s0);
+        aprox.clear()
+        aprox.append(s0); aprox.append(s1); aprox.append(s2)
+
+    steff.pop(0)    
+    print('Aceleración de Steffensen:\n', steff)
+    
+Steffensen()
+
+
+
+
+
+
+
+
+print('\n\n\n Solucion por N-R:')
 # xo = 2 = b
 
 x0 = sp.N(b); maxiter = 100;
@@ -92,34 +139,21 @@ for k in range(maxiter):
 print(aproxNR)
 print('N de iteraciones realizadas: ', niter)
 
+aprox = aproxNR; 
+n = len(aprox)
+aitken= []
+Aitken()
 
-print('Solucion Aitken')
 
 aprox = aproxNR; 
 n = len(aprox)
-
-k = 0; acelAitken = []; 
-for k in range(n-2):
-    aproxacel = aprox[k]-(aprox[k+1]-aprox[k])**2/(aprox[k+2]-2*aprox[k+1]+aprox[k])
-    acelAitken.append(aproxacel); 
-print(acelAitken)
-
-
-print('Solucion Steffensen')
-aprox = aproxNR; 
-n = len(aprox)
+tol= 10**(-5)          
+steff= [1];
 
 def g(x):
-    return gNR(x)
+    return x-f(x)
 
-k = 0; acelSteff = []; 
-for k in range(n-2):
-    aproxSteff0 = aprox[k]-(aprox[k+1]-aprox[k])**2/(aprox[k+2]-2*aprox[k+1]+aprox[k])
-    aproxSteff1 = g(aproxSteff0); aproxSteff2 = g(aproxSteff1);
-    acelSteff.append(aproxSteff0); 
-    acelSteff.append(aproxSteff1);
-    acelSteff.append(aproxSteff2);
-print(acelSteff)
+Steffensen()
 
 
 

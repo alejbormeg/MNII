@@ -7,10 +7,8 @@ Created on Mon Apr  6 13:53:41 2020
 
 import numpy as np
 import sympy as sp
-import math
 from decimal import getcontext
 from decimal import Decimal
-from numpy import sign
 
 def mychop(expr, *, max=10**(-10)):
     ''' Esta función redondea por cero cualquier número más
@@ -50,6 +48,8 @@ nmax=150
 def df(x):
     return 2*x -3 - sp.exp(x)
 
+print('\n\n Solución con N-R')
+print('Dado que la primera derivada de f es negativa en el intervalo y la segunda deerivada positiva viendo la gráfica, tomamos x0=-1')
 x0 = Decimal(a); niter = 0;
 getcontext().prec = cifras;
 for k in range(nmax):

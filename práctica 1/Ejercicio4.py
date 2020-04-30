@@ -10,6 +10,7 @@ import numpy as np
 import sympy as sp
 from decimal import getcontext
 from decimal import Decimal
+from numpy import sign
 
 
 def mychop(expr, *, max=10**(-10)):
@@ -81,9 +82,6 @@ def df2(x):
     return 6 +sp.exp(x)
 def gNR(x):
     return x - f(x)/df(x)
-
-print('Solucion por N-R')
-
 print(f(b1)*df2(b1))
 print("f(x0)*f''(x0) >0, por tanto tenemos convergencia")
 

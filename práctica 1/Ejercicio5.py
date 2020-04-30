@@ -16,7 +16,7 @@ from scipy.optimize import fsolve
 from sympy.solvers import solve, nsolve, solveset
 
 
-print("a) 𝑓(𝑥)=x^7-x^4+2")
+print("a) f(x)=x^7-x^4+2")
 coefs = [1,0,0,-1,0,0,0,2]
 
 print(np.roots(coefs));

@@ -50,6 +50,7 @@ def df(x):
     return 2*x +1 +10*(-sp.sin(x))
 
 print ('Veamos la primera raiz')
+print('Dado que como podemos ver en la gráfica en este primer intervalo la derivada primera es negativa en todo el intervalo y la derivada segunda es positiva debemos tomar x0=-5')
 a1=-5. ; b1=-3.;
 sp.plot(f(x),(x,a1,b1))
 
@@ -80,7 +81,9 @@ print('Número total de iteraciones ', niter)
 
 getcontext().prec = mporig # Se restaura la precisión por defecto
 
-print ('Veamos la primera raiz')
+print ('\n\nVeamos la segunda raiz')
+print('Dado que como podemos ver en la gráfica en este segundo intervalo la derivada primera es positiva en todo el intervalo y la derivada segunda es negativa debemos tomar x0=-2')
+
 a1=-2. ; b1=0.;
 sp.plot(f(x),(x,a1,b1))
 

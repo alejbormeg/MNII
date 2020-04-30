@@ -77,6 +77,7 @@ getcontext().prec = mporig # así como la precisión por defecto
 print('\n\n')
 #Algoritmo de N-R
 
+tol=10**(-3)
 print('Algorimto de Newton-Raphson')
 def df(x):
     return 3*x**2 + 8*x

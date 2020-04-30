@@ -8,7 +8,6 @@ import numpy as np
 import sympy as sp
 from decimal import getcontext
 from decimal import Decimal
-from numpy import sign
 
 def mychop(expr, *, max=10**(-10)):
     ''' Esta función redondea por cero cualquier número más
@@ -51,13 +50,13 @@ nmax=150
 def df(x):
     return 3*x**2 -1
 
+print('\n\n Solución con N-R')
+print('dado que la primera y segunda derivadas de f son positivas tomamos x0=2')
 x0 = Decimal(b); niter = 0;
 getcontext().prec = cifras;
 for k in range(nmax):
     niter = niter + 1;
     x1 = x0 - f(x0)/Decimal(df(x0))  # método de Whitaker
-    #x1 = x0 - f(x0)/df(x0)   método de N-R
-    # Cambiar m por Decimal(df(x0)) para el de Newton-Raphson
     if abs(x1-x0) < tol:
         sale = 'tolerancia'
         break
